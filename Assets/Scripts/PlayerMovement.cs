@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Jump(){
-        body.velocity = new Vector2(body.velocity.x, body.velocity.y + jumpSpeed * worldUp);
+        body.velocity = new Vector2(body.velocity.x, jumpSpeed * worldUp);
     }
 
     private void OnCollisionEnter2D(Collision2D Collision){
@@ -69,6 +69,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded(){
         RaycastHit2D raycastHit = (worldUp > 0) ? Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer)
         : Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.up, 0.1f, groundLayer);
+
+        //if (raycastHit.collider != null){
+        //    if (raycastHit.collider.parent){}
+        //}
+
         return raycastHit.collider != null;
     }
     private bool touchesWall(){
@@ -141,3 +146,4 @@ public class PlayerMovement : MonoBehaviour
         worldUp *= -1;
     }
 }
+
