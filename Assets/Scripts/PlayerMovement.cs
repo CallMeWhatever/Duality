@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask itemLayer;
     [SerializeField] private float TimeLimit;
     [SerializeField] private float TimeBonus;
-    [SerializeField] private float jumpCooldown;
+    [SerializeField] private float jumpCooldownTime;
     public float elapsedTime;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private float TimeBonusCooldown;
     private float worldUp = 1;
     private bool Doublejump;
+    private float jumpCooldown;
     
 
 
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         elapsedTime = TimeLimit;
         TimeBonusCooldown = -1;
+        jumpCooldown = -1;
     }
 
     private void Update(){
@@ -36,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if(Input.GetKey(KeyCode.Space) && (grounded || Doublejump) && (jumpCooldown <= 0)){
             Doublejump = !Doublejump;
-            jumpCooldown = 1.0f;
+            jumpCooldown = jumpCooldownTime;
             Jump();
         }
         if((Input.GetKey(KeyCode.X) && !flipCooldwonActive) || touchesPortal()){

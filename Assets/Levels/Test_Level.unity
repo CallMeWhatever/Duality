@@ -154,7 +154,7 @@ MonoBehaviour:
   plaform: {fileID: 812661383}
   startPoint: {fileID: 453258818}
   endPoint: {fileID: 912935896}
-  speed: 10
+  platformSpeed: 0
   direction: 1
 --- !u!4 &6555294
 Transform:
@@ -488,7 +488,7 @@ MonoBehaviour:
     m_Bits: 256
   TimeLimit: 1000
   TimeBonus: 5
-  jumpCooldown: 3
+  jumpCooldownTime: 2
   elapsedTime: 5
 --- !u!1 &453258817
 GameObject:
