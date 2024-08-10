@@ -488,6 +488,7 @@ MonoBehaviour:
     m_Bits: 256
   TimeLimit: 1000
   TimeBonus: 5
+  jumpCooldown: 3
   elapsedTime: 5
 --- !u!1 &453258817
 GameObject:

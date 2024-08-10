@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask itemLayer;
     [SerializeField] private float TimeLimit;
     [SerializeField] private float TimeBonus;
+    [SerializeField] private float jumpCooldown;
     public float elapsedTime;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
@@ -16,7 +17,8 @@ public class PlayerMovement : MonoBehaviour
     private float cooldown;
     private float TimeBonusCooldown;
     private float worldUp = 1;
-
+    private bool Doublejump;
+    
 
 
     private void Awake(){
@@ -28,8 +30,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update(){
         body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed ,body.velocity.y);
-
-        if(Input.GetKey(KeyCode.Space) && isGrounded()){
+        bool grounded = isGrounded();
+        if (grounded && !Input.GetKey(KeyCode.Space)){
+            Doublejump = false;
+        }
+        if(Input.GetKey(KeyCode.Space) && (grounded || Doublejump) && (jumpCooldown <= 0)){
+            Doublejump = !Doublejump;
+            jumpCooldown = 1.0f;
             Jump();
         }
         if((Input.GetKey(KeyCode.X) && !flipCooldwonActive) || touchesPortal()){
@@ -42,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
         if (TimeBonusCooldown >= 0){
             TimeBonusCooldown -= Time.deltaTime;
         }
+        
+        if (jumpCooldown > 0){ jumpCooldown -= Time.deltaTime*10; }
 
         if (cooldown <= 0){flipCooldwonActive = false;}
         
@@ -49,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Jump(){
-        body.velocity = new Vector2(body.velocity.x, jumpSpeed * worldUp);
+        body.velocity = new Vector2(body.velocity.x, body.velocity.y + jumpSpeed * worldUp);
     }
 
     private void OnCollisionEnter2D(Collision2D Collision){
