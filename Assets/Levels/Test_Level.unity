@@ -155,6 +155,7 @@ MonoBehaviour:
   startPoint: {fileID: 453258818}
   endPoint: {fileID: 912935896}
   platformSpeed: 0
+  platformSpeed: 1
   direction: 1
 --- !u!4 &6555294
 Transform:
