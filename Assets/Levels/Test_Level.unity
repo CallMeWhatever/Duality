@@ -1606,7 +1606,7 @@ GameObject:
   - component: {fileID: 1274251401}
   - component: {fileID: 1274251400}
   - component: {fileID: 1274251399}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: BouncyPlatform
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1625,7 +1625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1651ff56331d94748860ab5323b6b887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bouncyness: 10
+  bouncyness: 20
 --- !u!251 &1274251400
 PlatformEffector2D:
   m_ObjectHideFlags: 0
