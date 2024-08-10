@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask itemLayer;
     [SerializeField] private float TimeLimit;
     [SerializeField] private float TimeBonus;
+    [SerializeField] private float jumpCooldownTime;
     public float elapsedTime;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
@@ -16,7 +17,9 @@ public class PlayerMovement : MonoBehaviour
     private float cooldown;
     private float TimeBonusCooldown;
     private float worldUp = 1;
-
+    private bool Doublejump;
+    private float jumpCooldown;
+    
 
 
     private void Awake(){
@@ -24,12 +27,18 @@ public class PlayerMovement : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         elapsedTime = TimeLimit;
         TimeBonusCooldown = -1;
+        jumpCooldown = -1;
     }
 
     private void Update(){
         body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed ,body.velocity.y);
-
-        if(Input.GetKey(KeyCode.Space) && isGrounded()){
+        bool grounded = isGrounded();
+        if (grounded && !Input.GetKey(KeyCode.Space)){
+            Doublejump = false;
+        }
+        if(Input.GetKey(KeyCode.Space) && (grounded || Doublejump) && (jumpCooldown <= 0)){
+            Doublejump = !Doublejump;
+            jumpCooldown = jumpCooldownTime;
             Jump();
         }
         if((Input.GetKey(KeyCode.X) && !flipCooldwonActive) || touchesPortal()){
@@ -42,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
         if (TimeBonusCooldown >= 0){
             TimeBonusCooldown -= Time.deltaTime;
         }
+        
+        if (jumpCooldown > 0){ jumpCooldown -= Time.deltaTime*10; }
 
         if (cooldown <= 0){flipCooldwonActive = false;}
         
@@ -58,6 +69,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded(){
         RaycastHit2D raycastHit = (worldUp > 0) ? Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer)
         : Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.up, 0.1f, groundLayer);
+
+        //if (raycastHit.collider != null){
+        //    if (raycastHit.collider.parent){}
+        //}
+
         return raycastHit.collider != null;
     }
     private bool touchesWall(){
@@ -130,3 +146,4 @@ public class PlayerMovement : MonoBehaviour
         worldUp *= -1;
     }
 }
+
