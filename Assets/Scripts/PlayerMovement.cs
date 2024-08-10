@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float TimeBonus;
     [SerializeField] private float jumpCooldownTime;
     [SerializeField] private float portalBoost;
+    [SerializeField] private float damageRecoilModifyer;
     public float elapsedTime;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
@@ -20,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private float worldUp = 1;
     private bool Doublejump;
     private float jumpCooldown;
+
+    public bool enable;
     
 
 
@@ -29,9 +32,12 @@ public class PlayerMovement : MonoBehaviour
         elapsedTime = TimeLimit;
         TimeBonusCooldown = -1;
         jumpCooldown = -1;
+        enable = true;
     }
 
     private void Update(){
+        //while(!enable){}
+        if(enable){
         body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed ,body.velocity.y);
         bool grounded = isGrounded();
         if (grounded && !Input.GetKey(KeyCode.Space)){
@@ -59,9 +65,15 @@ public class PlayerMovement : MonoBehaviour
         
         cooldown -= Time.deltaTime;
     }
+    }
 
     private void Jump(){
         body.velocity = new Vector2(body.velocity.x, jumpSpeed * worldUp);
+    }
+
+    public void Damage_Recoil(float _damage){
+        body.velocity = new Vector2(-body.velocity.x * _damage * damageRecoilModifyer, _damage * damageRecoilModifyer * worldUp);
+        Doublejump = true;
     }
 
     private void OnCollisionEnter2D(Collision2D Collision){
