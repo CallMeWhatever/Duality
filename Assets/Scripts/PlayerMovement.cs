@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         return (raycastHitRight.collider != null) || (raycastHitLeft.collider != null) || (raycastHitUp.collider != null) || (raycastHitDown.collider != null);
     }
 
-    private void FlipWorld(){
+    public void FlipWorld(){
         body.transform.position = new Vector2(body.position.x, -body.position.y);
         body.gravityScale *= -1;
         worldUp *= -1;
