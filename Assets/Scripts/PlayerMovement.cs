@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update(){
         body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed ,body.velocity.y);
 
-        if(Input.GetKey(KeyCode.Space) && isGrounded()  && !touchesWall()){
+        if(Input.GetKey(KeyCode.Space) && isGrounded()){
             Jump();
         }
         if((Input.GetKey(KeyCode.X) && !flipCooldwonActive) || touchesPortal()){
