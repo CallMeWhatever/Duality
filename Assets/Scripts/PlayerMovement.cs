@@ -5,10 +5,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask portalLayer;
+    [SerializeField] private LayerMask itemLayer;
+    [SerializeField] private float TimeLimit;
+    [SerializeField] private float TimeBonus;
+    public float elapsedTime;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
     private bool flipCooldwonActive = false;
     private float cooldown;
+    private float TimeBonusCooldown;
     private float worldUp = 1;
 
 
@@ -16,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private void Awake(){
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        elapsedTime = TimeLimit;
+        TimeBonusCooldown = -1;
     }
 
     private void Update(){
@@ -29,8 +36,13 @@ public class PlayerMovement : MonoBehaviour
             flipCooldwonActive = true;
             cooldown = 1;
         }
+        touchesItem(); //Function to detect item collisions and applies effects
 
-        if(cooldown <= 0){flipCooldwonActive = false;}
+        if (TimeBonusCooldown >= 0){
+            TimeBonusCooldown -= Time.deltaTime;
+        }
+
+        if (cooldown <= 0){flipCooldwonActive = false;}
         
         cooldown -= Time.deltaTime;
     }
@@ -59,8 +71,55 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D raycastHitDown = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, portalLayer);
         return (raycastHitRight.collider != null) || (raycastHitLeft.collider != null) || (raycastHitUp.collider != null) || (raycastHitDown.collider != null);
     }
+    private void touchesItem()
+    {
+        RaycastHit2D raycastHitRight = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.right, 0.1f, itemLayer);
+        RaycastHit2D raycastHitLeft = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.left, 0.1f, itemLayer);
+        RaycastHit2D raycastHitUp = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.up, 0.1f, itemLayer);
+        RaycastHit2D raycastHitDown = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, itemLayer);
+        if (TimeBonusCooldown < 0){
+            if (raycastHitRight.collider != null)
+            {
+                if (raycastHitRight.collider.gameObject.CompareTag("TimeBonus"))
+                {
+                    elapsedTime += TimeBonus;
+                    TimeBonusCooldown = 2.0f;
+                }
+            }
+            if (raycastHitLeft.collider != null)
+            {
+                if (raycastHitLeft.collider.gameObject.CompareTag("TimeBonus"))
+                {
+                    elapsedTime += TimeBonus;
+                    TimeBonusCooldown = 2.0f;
+                }
+            }
+            if (raycastHitUp.collider != null)
+            {
+                if (raycastHitUp.collider.gameObject.CompareTag("TimeBonus"))
+                {
+                    elapsedTime += TimeBonus;
+                    TimeBonusCooldown = 2.0f;
+                }
+            }
+            if (raycastHitDown.collider != null)
+            {
+                if (raycastHitDown.collider.gameObject.CompareTag("TimeBonus"))
+                {
+                    elapsedTime += TimeBonus;
+                    TimeBonusCooldown = 2.0f;
+                }
+            }
+        }
+    }
 
-    public void FlipWorld(){
+    public void TimerFlip(){
+        if (worldUp > 0) { FlipWorld(); }
+    }
+    private void FlipWorld(){
+        if (worldUp < 0){
+            elapsedTime = TimeLimit;
+        }
         body.transform.position = new Vector2(body.position.x, -body.position.y);
         body.gravityScale *= -1;
         worldUp *= -1;

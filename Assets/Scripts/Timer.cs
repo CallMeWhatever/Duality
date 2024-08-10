@@ -8,7 +8,6 @@ public class Timer : MonoBehaviour
     PlayerMovement player; 
 
     [SerializeField] TextMeshProUGUI timerText;
-    [SerializeField] float elapsedTime = 5;
     // Update is called once per frame
     void Start(){
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>(); 
@@ -16,14 +15,17 @@ public class Timer : MonoBehaviour
     
     
     void Update(){
-        elapsedTime -= Time.deltaTime;
-        int minutes = Mathf.FloorToInt(elapsedTime/60);
-        int seconds = Mathf.FloorToInt(elapsedTime%60);
-        int millisecons = Mathf.FloorToInt(elapsedTime);
-        timerText.text = string.Format("{0:0}:{1:00}",minutes,seconds);
-        if (elapsedTime <= 0){
-            elapsedTime = 30.0f;
-            player.FlipWorld();
+        if (player.elapsedTime > 0){
+            player.elapsedTime -= Time.deltaTime;
+            int minutes = Mathf.FloorToInt(player.elapsedTime / 60);
+            int seconds = Mathf.FloorToInt(player.elapsedTime % 60);
+            int millisecons = Mathf.FloorToInt(player.elapsedTime);
+            timerText.text = string.Format("{0:0}:{1:00}", minutes, seconds);
+        }
+        else{
+            timerText.text = string.Empty;
+            player.elapsedTime = -1.0f;
+            player.TimerFlip();
         }
     }
 }
