@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float TimeLimit;
     [SerializeField] private float TimeBonus;
     [SerializeField] private float jumpCooldownTime;
+    [SerializeField] private float portalBoost;
     public float elapsedTime;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
@@ -70,10 +71,6 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D raycastHit = (worldUp > 0) ? Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer)
         : Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.up, 0.1f, groundLayer);
 
-        //if (raycastHit.collider != null){
-        //    if (raycastHit.collider.parent){}
-        //}
-
         return raycastHit.collider != null;
     }
     private bool touchesWall(){
@@ -86,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D raycastHitLeft = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.left, 0.1f, portalLayer);
         RaycastHit2D raycastHitUp = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.up, 0.1f, portalLayer);
         RaycastHit2D raycastHitDown = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, portalLayer);
+        
         return (raycastHitRight.collider != null) || (raycastHitLeft.collider != null) || (raycastHitUp.collider != null) || (raycastHitDown.collider != null);
     }
     private void touchesItem()
@@ -141,9 +139,18 @@ public class PlayerMovement : MonoBehaviour
         if (worldUp < 0){
             elapsedTime = TimeLimit;
         }
+        
         body.transform.position = new Vector2(body.position.x, -body.position.y);
         body.gravityScale *= -1;
         worldUp *= -1;
+        if (worldUp < 0 && elapsedTime >= 0){
+            elapsedTime = -1;
+            body.velocity = new Vector2(body.velocity.x, body.velocity.y + portalBoost * worldUp);
+        }
+    }
+
+    public void MovePlayer(float x, float y){
+        body.position = new Vector2(body.position.x + x, body.position.y + y);
     }
 }
 

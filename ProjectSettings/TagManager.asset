@@ -8,6 +8,7 @@ TagManager:
   - Portal
   - TimeBonus
   - MovingPlatform
+  - BottomPortal
   layers:
   - Default
   - TransparentFX
