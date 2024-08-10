@@ -84,6 +84,10 @@ public class PlayerMovement : MonoBehaviour
     private void Jump(){
         body.velocity = new Vector2(body.velocity.x, jumpSpeed * worldUp);
     }
+    public void bounce(float bouncyness){
+        body.velocity = new Vector2(body.velocity.x, bouncyness * worldUp);
+        Doublejump = true;
+    }
 
     public void Damage_Recoil(float _damage){
         body.velocity = new Vector2(-body.velocity.x * _damage * damageRecoilModifyer, _damage * damageRecoilModifyer * worldUp);
