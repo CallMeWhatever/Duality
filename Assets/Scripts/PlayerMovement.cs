@@ -21,14 +21,16 @@ public class PlayerMovement : MonoBehaviour
     private float worldUp = 1;
     private bool Doublejump;
     private float jumpCooldown;
-
     public bool enable;
+
+    private Animator anim;
     
 
 
     private void Awake(){
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        anim = GetComponent<Animator>();
         elapsedTime = TimeLimit;
         TimeBonusCooldown = -1;
         jumpCooldown = -1;
@@ -38,7 +40,17 @@ public class PlayerMovement : MonoBehaviour
     private void Update(){
         //while(!enable){}
         if(enable){
-        body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed ,body.velocity.y);
+        
+        float horizontalInput = Input.GetAxis("Horizontal");
+        body.velocity = new Vector2(horizontalInput * speed ,body.velocity.y);
+
+        if (horizontalInput > 0.01f){
+            body.transform.localScale = new Vector3(0.2f,0.2f * worldUp,0.2f);
+        }
+        else if(horizontalInput < -0.01f){
+            body.transform.localScale = new Vector3(-0.2f,0.2f * worldUp,0.2f);
+        }
+
         bool grounded = isGrounded();
         if (grounded && !Input.GetKey(KeyCode.Space)){
             Doublejump = false;
@@ -64,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
         if (cooldown <= 0){flipCooldwonActive = false;}
         
         cooldown -= Time.deltaTime;
+
+        anim.SetBool("Idle", (horizontalInput == 0) && grounded);
     }
     }
 
@@ -155,6 +169,7 @@ public class PlayerMovement : MonoBehaviour
         body.transform.position = new Vector2(body.position.x, -body.position.y);
         body.gravityScale *= -1;
         worldUp *= -1;
+        body.transform.localScale = new Vector3(0.2f,0.2f * worldUp,0.2f);
         if (worldUp < 0 && elapsedTime >= 0){
             elapsedTime = -1;
             body.velocity = new Vector2(body.velocity.x, body.velocity.y + portalBoost * worldUp);
