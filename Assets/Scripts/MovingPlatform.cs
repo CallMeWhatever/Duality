@@ -5,7 +5,7 @@ public class MovingPlatform : MonoBehaviour
     public Transform plaform;
     public Transform startPoint;
     public Transform endPoint;  
-    [SerializeField] private float speed;
+    [SerializeField] private float platformSpeed;
     [SerializeField] int direction;
    
     void Update(){
@@ -13,7 +13,7 @@ public class MovingPlatform : MonoBehaviour
         Vector2 mvDirection = new Vector2(target.x - plaform.position.x, target.y - plaform.position.y);
         float distance = mvDirection.magnitude;
         mvDirection.Normalize();
-        plaform.position = new Vector2(plaform.position.x + mvDirection.x*speed*0.001f , plaform.position.y + mvDirection.y*speed*0.001f);
+        plaform.position = new Vector2(plaform.position.x + mvDirection.x*platformSpeed*0.001f , plaform.position.y + mvDirection.y*platformSpeed*0.001f);
 
 
         if (distance <= 0.01f){
