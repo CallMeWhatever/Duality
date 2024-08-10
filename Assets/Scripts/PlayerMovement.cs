@@ -4,6 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask portalLayer;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
     private bool flipCooldwonActive = false;
@@ -23,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKey(KeyCode.Space) && isGrounded()  && !touchesWall()){
             Jump();
         }
-        if(Input.GetKey(KeyCode.X) && !flipCooldwonActive){
+        if((Input.GetKey(KeyCode.X) && !flipCooldwonActive) || touchesPortal()){
             FlipWorld();
             flipCooldwonActive = true;
             cooldown = 1;
@@ -51,7 +52,13 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D raycastHitLeft = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.left, 0.1f, groundLayer);
         return (raycastHitRight.collider != null) || (raycastHitLeft.collider != null) ;
     }
-
+    private bool touchesPortal(){
+        RaycastHit2D raycastHitRight = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.right, 0.1f, portalLayer);
+        RaycastHit2D raycastHitLeft = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.left, 0.1f, portalLayer);
+        RaycastHit2D raycastHitUp = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.up, 0.1f, portalLayer);
+        RaycastHit2D raycastHitDown = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, portalLayer);
+        return (raycastHitRight.collider != null) || (raycastHitLeft.collider != null) || (raycastHitUp.collider != null) || (raycastHitDown.collider != null);
+    }
 
     private void FlipWorld(){
         body.transform.position = new Vector2(body.position.x, -body.position.y);
