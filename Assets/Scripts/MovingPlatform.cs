@@ -22,7 +22,6 @@ public class MovingPlatform : MonoBehaviour
     }
 
     Vector2 currentMovementTarget(){
-        Debug.Log(direction);
         if (direction > 0){
             return(new Vector2(startPoint.position.x, startPoint.position.y));
         }
