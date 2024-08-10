@@ -154,7 +154,7 @@ MonoBehaviour:
   plaform: {fileID: 812661383}
   startPoint: {fileID: 453258818}
   endPoint: {fileID: 912935896}
-  speed: 10
+  platformSpeed: 10
   direction: 1
 --- !u!4 &6555294
 Transform:
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpSpeed: 0
+  jumpSpeed: 10
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
