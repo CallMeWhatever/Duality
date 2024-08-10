@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float jumpSpeed;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask portalLayer;
     [SerializeField] private LayerMask itemLayer;
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Jump(){
-        body.velocity = new Vector2(body.velocity.x, speed * worldUp);
+        body.velocity = new Vector2(body.velocity.x, jumpSpeed * worldUp);
     }
 
     private void OnCollisionEnter2D(Collision2D Collision){
