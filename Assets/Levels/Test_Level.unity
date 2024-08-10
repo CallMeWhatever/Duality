@@ -154,7 +154,7 @@ MonoBehaviour:
   plaform: {fileID: 812661383}
   startPoint: {fileID: 453258818}
   endPoint: {fileID: 912935896}
-  platformSpeed: 10
+  speed: 10
   direction: 1
 --- !u!4 &6555294
 Transform:
@@ -336,10 +336,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 1000
+  m_LinearDrag: 1
   m_AngularDrag: 0
-  m_GravityScale: 2
+  m_GravityScale: 4
   m_Material: {fileID: 6200000, guid: ba151761c1b78f04f93d9394c5634e81, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpSpeed: 10
+  jumpSpeed: 15
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
