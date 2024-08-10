@@ -84,30 +84,34 @@ public class PlayerMovement : MonoBehaviour
                 {
                     elapsedTime += TimeBonus;
                     TimeBonusCooldown = 2.0f;
+                    Destroy (raycastHitRight.collider.gameObject);
                 }
             }
-            if (raycastHitLeft.collider != null)
+            else if (raycastHitLeft.collider != null)
             {
                 if (raycastHitLeft.collider.gameObject.CompareTag("TimeBonus"))
                 {
                     elapsedTime += TimeBonus;
                     TimeBonusCooldown = 2.0f;
+                    Destroy (raycastHitLeft.collider.gameObject);
                 }
             }
-            if (raycastHitUp.collider != null)
+            else if (raycastHitUp.collider != null)
             {
                 if (raycastHitUp.collider.gameObject.CompareTag("TimeBonus"))
                 {
                     elapsedTime += TimeBonus;
                     TimeBonusCooldown = 2.0f;
+                    Destroy (raycastHitUp.collider.gameObject);
                 }
             }
-            if (raycastHitDown.collider != null)
+            else if (raycastHitDown.collider != null)
             {
                 if (raycastHitDown.collider.gameObject.CompareTag("TimeBonus"))
                 {
                     elapsedTime += TimeBonus;
                     TimeBonusCooldown = 2.0f;
+                    Destroy (raycastHitDown.collider.gameObject);
                 }
             }
         }
