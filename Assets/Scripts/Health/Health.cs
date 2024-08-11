@@ -3,12 +3,14 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private float startingHealth;
+    private UIManager uiManager;
     public float currentHealth {get; private set;}
     private Animator anim;
 
     private void Awake(){
         currentHealth = startingHealth;
         anim = GetComponent<Animator>();
+        uiManager = FindObjectOfType<UIManager>();
     }
 
     public void TakeDamage(float _damage){
@@ -22,7 +24,8 @@ public class Health : MonoBehaviour
         if(currentHealth <= 0){
             //GetComponent<PlayerMovement>().enable = false;
             anim.SetTrigger("Death");
-            Respawn();
+            uiManager.Lost();
+            GetComponent<PlayerMovement>().enable = false;
         }
         else{
             anim.SetTrigger("hurt");

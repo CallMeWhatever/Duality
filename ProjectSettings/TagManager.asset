@@ -11,6 +11,7 @@ TagManager:
   - BottomPortal
   - MusicManager
   - ExtraHealth
+  - WinItem
   layers:
   - Default
   - TransparentFX

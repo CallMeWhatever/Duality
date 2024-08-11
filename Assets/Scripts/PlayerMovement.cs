@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
     private MusicManager musicManager;
+    private UIManager uiManager;
     private bool flipCooldwonActive = false;
     private float cooldown;
     private float TimeBonusCooldown;
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
+        uiManager = FindObjectOfType<UIManager>();
         musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>(); 
         elapsedTime = TimeLimit;
         TimeBonusCooldown = -1;
@@ -74,9 +76,6 @@ public class PlayerMovement : MonoBehaviour
             flipCooldwonActive = true;
             cooldown = 1;
         }
-        if(Input.GetKey(KeyCode.P)){
-            GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().AddHealth(1);
-        }
         touchesItem(); //Function to detect item collisions and applies effects
 
         if (TimeBonusCooldown >= 0){
@@ -92,6 +91,12 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("Idle", (horizontalInput == 0) && grounded);
         anim.SetBool("Upwards", (worldUp > 0));
            
+    }
+    else{
+        if(Input.GetKey(KeyCode.Return)){
+            Respawn();
+        }
+        
     }
     }
 
@@ -145,7 +150,11 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (raycastHitRight.collider.gameObject.CompareTag("ExtraHealth")){
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().AddHealth(ExtraHealth);
-                    Destroy (raycastHitLeft.collider.gameObject);
+                    Destroy (raycastHitRight.collider.gameObject);
+                }
+                else if (raycastHitRight.collider.gameObject.CompareTag("WinItem")){
+                    uiManager.GameOver();
+                    enable = false;
                 }
             }
             else if (raycastHitLeft.collider != null){
@@ -154,9 +163,13 @@ public class PlayerMovement : MonoBehaviour
                     TimeBonusCooldown = 2.0f;
                     Destroy (raycastHitLeft.collider.gameObject);
                 }
-                else if (raycastHitRight.collider.gameObject.CompareTag("ExtraHealth")){
+                else if (raycastHitLeft.collider.gameObject.CompareTag("ExtraHealth")){
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().AddHealth(ExtraHealth);
-                    Destroy (raycastHitDown.collider.gameObject);
+                    Destroy (raycastHitLeft.collider.gameObject);
+                }
+                else if (raycastHitLeft.collider.gameObject.CompareTag("WinItem")){
+                    uiManager.GameOver();
+                    enable = false;
                 }
             }
             else if (raycastHitUp.collider != null){
@@ -165,9 +178,13 @@ public class PlayerMovement : MonoBehaviour
                     TimeBonusCooldown = 2.0f;
                     Destroy (raycastHitUp.collider.gameObject);
                 }
-                else if (raycastHitRight.collider.gameObject.CompareTag("ExtraHealth")){
+                else if (raycastHitUp.collider.gameObject.CompareTag("ExtraHealth")){
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().AddHealth(ExtraHealth);
-                    Destroy (raycastHitDown.collider.gameObject);
+                    Destroy (raycastHitUp.collider.gameObject);
+                }
+                else if (raycastHitUp.collider.gameObject.CompareTag("WinItem")){
+                    uiManager.GameOver();
+                    enable = false;
                 }
             }
             else if (raycastHitDown.collider != null){
@@ -177,9 +194,13 @@ public class PlayerMovement : MonoBehaviour
                     TimeBonusCooldown = 2.0f;
                     Destroy (raycastHitDown.collider.gameObject);
                 }
-                else if (raycastHitRight.collider.gameObject.CompareTag("ExtraHealth")){
+                else if (raycastHitDown.collider.gameObject.CompareTag("ExtraHealth")){
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().AddHealth(ExtraHealth);
                     Destroy (raycastHitDown.collider.gameObject);
+                }
+                else if (raycastHitDown.collider.gameObject.CompareTag("WinItem")){
+                    uiManager.GameOver();
+                    enable = false;
                 }
             }
         }
@@ -217,6 +238,9 @@ public class PlayerMovement : MonoBehaviour
         body.position = new Vector2(body.position.x + x, body.position.y + y);
     }
     public void Respawn(){
+        
+        enable = true;
+        uiManager.NewGame();
         if (worldUp < 1){
             body.gravityScale *= -1;
             worldUp *= -1;
