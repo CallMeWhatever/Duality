@@ -13,7 +13,19 @@ public class MusicManager : MonoBehaviour
 
     public void ChangeMusic(string newMusicID){
         foreach (Music m in musics){
-            m.source.Stop();
+            if(m.musicID == currentMusicID){
+                m.source.Stop();
+                break;
+            }
+        }
+        currentMusicID = newMusicID;
+        foreach (Music m in musics){
+            if(m.musicID == currentMusicID){
+                m.source.Play();
+                m.source.loop = true;
+                Debug.Log(currentMusicID);
+                break;
+            }
         }
     }
 }
