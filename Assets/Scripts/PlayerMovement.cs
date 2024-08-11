@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private bool flipCooldwonActive = false;
     private float cooldown;
     private float TimeBonusCooldown;
-    private float worldUp = 1;
+    public float worldUp = 1;
     private bool Doublejump;
     private float jumpCooldown;
     public bool enable;
