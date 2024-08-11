@@ -18,7 +18,7 @@ public class MovingPlatform : MonoBehaviour
     void Awake(){
         boxCollider = plaform.GetComponent<BoxCollider2D>();
     }
-    void Update(){
+    void FixedUpdate(){
         Vector2 target = currentMovementTarget();
         Vector2 mvDirection = new Vector2(target.x - plaform.position.x, target.y - plaform.position.y);
         float distance = mvDirection.magnitude;

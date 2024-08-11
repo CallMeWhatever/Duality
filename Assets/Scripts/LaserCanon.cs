@@ -17,7 +17,7 @@ public class LaserCanon : MonoBehaviour
     void Awake(){
         boxCollider = plaform.GetComponent<BoxCollider2D>();
     }
-    void Update(){
+    void FixedUpdate(){
         Vector2 target = new Vector2(endPoint.position.x,endPoint.position.y);
         Vector2 mvDirection = new Vector2(target.x - plaform.position.x, target.y - plaform.position.y);
         float distance = mvDirection.magnitude;
