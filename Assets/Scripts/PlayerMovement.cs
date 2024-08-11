@@ -90,6 +90,8 @@ public class PlayerMovement : MonoBehaviour
         cooldown -= Time.deltaTime;
 
         anim.SetBool("Idle", (horizontalInput == 0) && grounded);
+        anim.SetBool("Upwards", (worldUp > 0));
+           
     }
     }
 
@@ -202,9 +204,11 @@ public class PlayerMovement : MonoBehaviour
         }
         if (worldUp < 0){
             musicManager.ChangeMusic("down");
+            anim.SetTrigger("Down");
         }
         else{
             musicManager.ChangeMusic("up");
+            anim.SetTrigger("Up");
         }
         
     }

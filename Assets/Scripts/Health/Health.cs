@@ -21,6 +21,7 @@ public class Health : MonoBehaviour
 
         if(currentHealth <= 0){
             //GetComponent<PlayerMovement>().enable = false;
+            anim.SetTrigger("Death");
             Respawn();
         }
         else{
