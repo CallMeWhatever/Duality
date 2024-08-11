@@ -24,12 +24,6 @@ public class Health : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + _health, 0, startingHealth);
     }
 
-    private void Update(){
-        if (Input.GetKeyDown(KeyCode.E)){
-            TakeDamage(0.5f);
-        }
-    }
-
     public void Respawn(){
         AddHealth(startingHealth);
         //anim.ResetTrigger()

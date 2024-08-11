@@ -10,6 +10,7 @@ TagManager:
   - MovingPlatform
   - BottomPortal
   - MusicManager
+  - ExtraHealth
   layers:
   - Default
   - TransparentFX
