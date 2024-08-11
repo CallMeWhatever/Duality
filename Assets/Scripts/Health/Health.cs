@@ -12,11 +12,19 @@ public class Health : MonoBehaviour
     }
 
     public void TakeDamage(float _damage){
-        currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
-    
+        if(GetComponent<PlayerMovement>().worldUp < 0 && _damage > 0){
+            currentHealth = 0;
+        }
+        else{
+            currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
+        }
+
         if(currentHealth <= 0){
             //GetComponent<PlayerMovement>().enable = false;
             Respawn();
+        }
+        else{
+            anim.SetTrigger("hurt");
         }
     
     }
