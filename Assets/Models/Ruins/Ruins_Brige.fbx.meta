@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ec6768a392302f14d882e266e6d00d60
+guid: d1fab913866f9204ca0173684fd3cac3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Mat_Spike_Platform
-    second: {fileID: 2100000, guid: 98f54b05ec596754880c7f226be8b9d2, type: 2}
+      name: Mat_Ruins
+    second: {fileID: 2100000, guid: 983a401cccc4bf04c9880c0cd00b2e6b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_Vines
+    second: {fileID: 2100000, guid: 26b316abd1460ce42b4f31734ea6da3f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

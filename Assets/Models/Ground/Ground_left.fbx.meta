@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7a8f13ff34cc24542ae1192c69bf3fe0
+guid: 6cca87c44f1076e4998d8e6cf6a2bbe5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Mat_Spike
-    second: {fileID: 2100000, guid: e2f3136393a373a428b32635ac4e0a75, type: 2}
+      name: Mat_Platform.002
+    second: {fileID: 2100000, guid: 0573d214a573409498181e12a7a4268a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
