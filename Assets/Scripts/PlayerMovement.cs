@@ -183,6 +183,7 @@ public class PlayerMovement : MonoBehaviour
         if (worldUp < 0 && elapsedTime >= 0){
             elapsedTime = -1;
             body.velocity = new Vector2(body.velocity.x, body.velocity.y + portalBoost * worldUp);
+            Doublejump = true;
         }
         if (worldUp < 0){
             musicManager.ChangeMusic("down");
