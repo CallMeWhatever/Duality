@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask itemLayer;
     [SerializeField] private float TimeLimit;
     [SerializeField] private float TimeBonus;
+    [SerializeField] private float ExtraHealth;
     [SerializeField] private float jumpCooldownTime;
     [SerializeField] private float portalBoost;
     [SerializeField] private float damageRecoilModifyer;
@@ -73,6 +74,9 @@ public class PlayerMovement : MonoBehaviour
             flipCooldwonActive = true;
             cooldown = 1;
         }
+        if(Input.GetKey(KeyCode.P)){
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().AddHealth(1);
+        }
         touchesItem(); //Function to detect item collisions and applies effects
 
         if (TimeBonusCooldown >= 0){
@@ -131,39 +135,48 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D raycastHitUp = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.up, 0.1f, itemLayer);
         RaycastHit2D raycastHitDown = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, itemLayer);
         if (TimeBonusCooldown < 0){
-            if (raycastHitRight.collider != null)
-            {
-                if (raycastHitRight.collider.gameObject.CompareTag("TimeBonus"))
-                {
+            if (raycastHitRight.collider != null){
+                if (raycastHitRight.collider.gameObject.CompareTag("TimeBonus")){
                     elapsedTime += TimeBonus;
                     TimeBonusCooldown = 2.0f;
                     Destroy (raycastHitRight.collider.gameObject);
                 }
+                else if (raycastHitRight.collider.gameObject.CompareTag("ExtraHealth")){
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().AddHealth(ExtraHealth);
+                    Destroy (raycastHitLeft.collider.gameObject);
+                }
             }
-            else if (raycastHitLeft.collider != null)
-            {
-                if (raycastHitLeft.collider.gameObject.CompareTag("TimeBonus"))
-                {
+            else if (raycastHitLeft.collider != null){
+                if (raycastHitLeft.collider.gameObject.CompareTag("TimeBonus")){
                     elapsedTime += TimeBonus;
                     TimeBonusCooldown = 2.0f;
                     Destroy (raycastHitLeft.collider.gameObject);
                 }
+                else if (raycastHitRight.collider.gameObject.CompareTag("ExtraHealth")){
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().AddHealth(ExtraHealth);
+                    Destroy (raycastHitDown.collider.gameObject);
+                }
             }
-            else if (raycastHitUp.collider != null)
-            {
-                if (raycastHitUp.collider.gameObject.CompareTag("TimeBonus"))
-                {
+            else if (raycastHitUp.collider != null){
+                if (raycastHitUp.collider.gameObject.CompareTag("TimeBonus")){
                     elapsedTime += TimeBonus;
                     TimeBonusCooldown = 2.0f;
                     Destroy (raycastHitUp.collider.gameObject);
                 }
+                else if (raycastHitRight.collider.gameObject.CompareTag("ExtraHealth")){
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().AddHealth(ExtraHealth);
+                    Destroy (raycastHitDown.collider.gameObject);
+                }
             }
-            else if (raycastHitDown.collider != null)
-            {
+            else if (raycastHitDown.collider != null){
                 if (raycastHitDown.collider.gameObject.CompareTag("TimeBonus"))
                 {
                     elapsedTime += TimeBonus;
                     TimeBonusCooldown = 2.0f;
+                    Destroy (raycastHitDown.collider.gameObject);
+                }
+                else if (raycastHitRight.collider.gameObject.CompareTag("ExtraHealth")){
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().AddHealth(ExtraHealth);
                     Destroy (raycastHitDown.collider.gameObject);
                 }
             }
