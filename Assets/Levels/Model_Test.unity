@@ -1067,6 +1067,7 @@ MonoBehaviour:
   damageRecoilModifyer: 0
   elapsedTime: 5
   enable: 0
+  spawnpoint: {x: 0, y: 0}
 --- !u!1001 &407774381
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2338,7 +2339,7 @@ Transform:
   m_GameObject: {fileID: 1194794440}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2383756, y: -0.3829734, z: 0.17229415, w: 0.87568444}
-  m_LocalPosition: {x: 19.93, y: 5.8, z: 6.360492}
+  m_LocalPosition: {x: 80.4, y: 13.2, z: 84.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3377,7 +3378,7 @@ Transform:
   m_GameObject: {fileID: 1819240813}
   serializedVersion: 2
   m_LocalRotation: {x: -0.311041, y: -0.053936243, z: -0.92873555, w: 0.19440888}
-  m_LocalPosition: {x: 14.83, y: 4.93, z: 6.360492}
+  m_LocalPosition: {x: 75.3, y: 12.329999, z: 84.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
