@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public bool enable;
 
     private Animator anim;
+    public Vector2 spawnpoint;
     
 
 
@@ -37,11 +38,12 @@ public class PlayerMovement : MonoBehaviour
         TimeBonusCooldown = -1;
         jumpCooldown = -1;
         enable = true;
-        
     }
 
     private void Start(){
         musicManager.ChangeMusic("up");
+        spawnpoint.x = body.position.x;
+        spawnpoint.y = body.position.y;
     }
     private void Update(){
         //while(!enable){}
@@ -196,6 +198,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void MovePlayer(float x, float y){
         body.position = new Vector2(body.position.x + x, body.position.y + y);
+    }
+    public void Respawn(){
+        if (worldUp < 1){
+            body.gravityScale *= -1;
+            worldUp *= -1;
+            body.transform.localScale = new Vector3(0.2f,0.2f * worldUp,0.2f);
+            elapsedTime = TimeLimit;
+        }
+        musicManager.ChangeMusic("up");
+        body.transform.position = new Vector2(spawnpoint.x, spawnpoint.y);
+        body.velocity = new Vector2(0,0);
+        
     }
 }
 
