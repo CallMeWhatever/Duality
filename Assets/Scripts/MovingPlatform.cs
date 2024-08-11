@@ -52,9 +52,9 @@ public class MovingPlatform : MonoBehaviour
         RaycastHit2D raycastHitUp = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.up, 0.1f, groundLayer);
          if (raycastHitUp.collider != null)
             {
-                Debug.Log("called touches player");
+                //Debug.Log("called touches player");
                 if (raycastHitUp.collider.gameObject.CompareTag("Player")){
-                    Debug.Log("called move player");
+                    //Debug.Log("called move player");
                     player.MovePlayer(mvDirection.x*platformSpeed*0.001f, mvDirection.y*platformSpeed*0.001f);
                 }
             }

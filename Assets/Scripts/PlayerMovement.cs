@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float elapsedTime;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
+    private MusicManager musicManager;
     private bool flipCooldwonActive = false;
     private float cooldown;
     private float TimeBonusCooldown;
@@ -31,12 +32,17 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
+        musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>(); 
         elapsedTime = TimeLimit;
         TimeBonusCooldown = -1;
         jumpCooldown = -1;
         enable = true;
+        
     }
 
+    private void Start(){
+        musicManager.ChangeMusic("up");
+    }
     private void Update(){
         //while(!enable){}
         if(enable){
@@ -178,6 +184,13 @@ public class PlayerMovement : MonoBehaviour
             elapsedTime = -1;
             body.velocity = new Vector2(body.velocity.x, body.velocity.y + portalBoost * worldUp);
         }
+        if (worldUp < 0){
+            musicManager.ChangeMusic("down");
+        }
+        else{
+            musicManager.ChangeMusic("up");
+        }
+        
     }
 
     public void MovePlayer(float x, float y){
