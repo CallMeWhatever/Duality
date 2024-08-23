@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float elapsedTime;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
+    private CapsuleCollider2D capsuleCollider;
     private MusicManager musicManager;
     private UIManager uiManager;
     private bool flipCooldwonActive = false;
