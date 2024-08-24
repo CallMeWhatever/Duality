@@ -16,7 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public float elapsedTime;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
-    private CapsuleCollider2D capsuleCollider;
+    //Testting CapsuleCollider
+    //private CapsuleCollider2D capsuleCollider;
     private MusicManager musicManager;
     private UIManager uiManager;
     private bool flipCooldwonActive = false;
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake(){
         body = GetComponent<Rigidbody2D>();
+        //capsuleCollider = GetComponent<CapsuleCollider2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         uiManager = FindObjectOfType<UIManager>();
@@ -53,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
         //while(!enable){}
         if(enable){
         
+        //Player Movement
         float horizontalInput = Input.GetAxis("Horizontal");
         body.velocity = new Vector2(horizontalInput * speed ,body.velocity.y);
 
@@ -63,15 +66,18 @@ public class PlayerMovement : MonoBehaviour
             body.transform.localScale = new Vector3(-0.2f,0.2f * worldUp,0.2f);
         }
 
+        //Check for Ground for Doublejump
         bool grounded = isGrounded();
         if (grounded && !Input.GetKey(KeyCode.Space)){
             Doublejump = false;
         }
-        if(Input.GetKey(KeyCode.Space) && (grounded || Doublejump) && (jumpCooldown <= 0)){
+        if(Input.GetKeyDown(KeyCode.Space) && (grounded || Doublejump) && (jumpCooldown <= 0)){
             Doublejump = !Doublejump;
             jumpCooldown = jumpCooldownTime;
             Jump();
         }
+
+        //Flip World
         if((Input.GetKey(KeyCode.X) && !flipCooldwonActive) || touchesPortal()){
             FlipWorld();
             flipCooldwonActive = true;
@@ -124,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
         return raycastHit.collider != null;
     }
     private bool touchesWall(){
+       
         RaycastHit2D raycastHitRight = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.right, 0.1f, groundLayer);
         RaycastHit2D raycastHitLeft = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.left, 0.1f, groundLayer);
         return (raycastHitRight.collider != null) || (raycastHitLeft.collider != null) ;
