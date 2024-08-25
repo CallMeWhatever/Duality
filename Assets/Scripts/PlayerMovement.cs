@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         if(enable){
         
         //Player Movement
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
         body.velocity = new Vector2(horizontalInput * speed ,body.velocity.y);
 
         if (horizontalInput > 0.01f){
