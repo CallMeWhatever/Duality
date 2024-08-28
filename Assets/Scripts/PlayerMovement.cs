@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
     //Testting CapsuleCollider
-    //private CapsuleCollider2D capsuleCollider;
+    private CapsuleCollider2D capsuleCollider;
     private MusicManager musicManager;
     private UIManager uiManager;
     private bool flipCooldwonActive = false;
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake(){
         body = GetComponent<Rigidbody2D>();
-        //capsuleCollider = GetComponent<CapsuleCollider2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         uiManager = FindObjectOfType<UIManager>();
